@@ -1,4 +1,5 @@
 ﻿
+using BeeBuzz.Data.Repositories;
 using BeeBuzz.Data.Repositories.Helpers;
 
 namespace BeeBuzz.Data
@@ -7,13 +8,17 @@ namespace BeeBuzz.Data
     {
         private ApplicationDbContext _context;
         private readonly IRepositoryProvider _repositoryProvider;
-        //private ILogger<DutchProductRepository> _loggerProduct;
-        //private DutchProductRepository _productRepository;
+
+        //private ILogger<BeehiveRepository> _loggerBeehive;
+        //private ILogger<ApplicationUserRepository> _loggerUser;
+        //private ILogger<OrganizationRepository> _loggerOrganization;
+
+        //private BeehiveRepository _beehiveRepository;
+        //private ApplicationUserRepository _userRepository;
+        //private OrganizationRepository _organizationRepository;
 
         public UnitOfWork(ApplicationDbContext context, IRepositoryProvider provider, ILoggerFactory loggerFactory) 
         {
-            //_loggerOrder = new Logger<DutchOrderRepository>(loggerFactory);
-            //_loggerProduct = new Logger<DutchProductRepository>(loggerFactory);
             _context = context;
             _repositoryProvider = provider;
         }
