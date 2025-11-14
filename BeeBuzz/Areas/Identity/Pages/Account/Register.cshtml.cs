@@ -74,10 +74,8 @@ namespace BeeBuzz.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [Range(18,150,ErrorMessage = "Invalid age")]
-            [Display(Name = "Age")]
-            public int Age { get; set; }
+            [Display(Name = "Organization")]
+            public string Organization { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -113,6 +111,7 @@ namespace BeeBuzz.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.OrganizationId = Input.Organization;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);                
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 
@@ -122,6 +121,7 @@ namespace BeeBuzz.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
                     await _userManager.AddToRoleAsync(user, "Default");
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
