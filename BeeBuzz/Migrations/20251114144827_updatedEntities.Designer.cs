@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeeBuzz.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251114141336_entities")]
-    partial class entities
+    [Migration("20251114144827_updatedEntities")]
+    partial class updatedEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,8 +61,8 @@ namespace BeeBuzz.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("OrganizationId")
-                        .HasColumnType("int");
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -129,11 +129,8 @@ namespace BeeBuzz.Migrations
 
             modelBuilder.Entity("BeeBuzz.Data.Entities.Organization", b =>
                 {
-                    b.Property<int>("OrganizationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrganizationId"));
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

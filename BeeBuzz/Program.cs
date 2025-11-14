@@ -2,6 +2,7 @@ using BeeBuzz.Data.Entities;
 using BeeBuzz.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BeeBuzz.Data.Repositories.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,25 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options => opti
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<Seeder>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IRepositoryProvider, RepositoryProvider>();
+
 var app = builder.Build();
+
+await RunSeeding(app);
+
+async Task RunSeeding(WebApplication app)
+{
+    var scopeFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (var scope = scopeFactory.CreateScope())
+    {
+        var seeder = scope.ServiceProvider.GetService<Seeder>();
+        await seeder.Seed();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
