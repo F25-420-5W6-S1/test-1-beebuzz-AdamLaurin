@@ -7,7 +7,11 @@ namespace BeeBuzz.Data.Repositories
     {
         public OrganizationRepository(ApplicationDbContext db, ILogger<BeeBuzzGenericGenericRepository<Organization>> logger) : base(db, logger)
         {
-            
+        }
+
+        public IEnumerable<ApplicationUser> GetUsersInOrganization(string organizationId)
+        {
+            return _dbSet.Where(o => o.OrganizationId == organizationId).First().Users;
         }
     }
 }
