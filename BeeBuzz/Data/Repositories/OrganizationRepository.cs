@@ -13,5 +13,19 @@ namespace BeeBuzz.Data.Repositories
         {
             return _dbSet.Where(o => o.OrganizationId == organizationId).First().Users;
         }
+
+        public IEnumerable<Beehive> GetBeehivesInOrganization(string organizationId)
+        {
+            var users = _dbSet.Where(o => o.OrganizationId == organizationId).First().Users;
+            var beehives = new List<Beehive>();
+            foreach (var user in users) 
+            {
+                foreach (var beehive in user.Beehives)
+                {
+                    beehives.Add(beehive);
+                }
+            }
+            return beehives;
+        }
     }
 }
